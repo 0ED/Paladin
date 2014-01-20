@@ -1,0 +1,58 @@
+%{
+#include "defs.h"
+#define YYSTYPE Cell *
+%}
+%token	ID INTEGER REAL INT FLOAT PRINT SEMICOLON COMMA 
+	EQUAL ADD SUBTRACT MULTIPLY DIVIDE LPAR RPAR UNKNOWN;
+%%
+Program
+	: Statements				{ $$ = $1; }
+Statements
+	: Statement					{ $$ = $1; }
+	| Statements Statement		{ $$ = $2; }
+Statement
+	: Assign SEMICOLON			{ $$ = $1; }
+Assign
+	: Variable EQUAL Expression	{ printf("%d\n",$3); }
+Expression
+	: INTEGER					{ $$ = atoi(yytext); }
+Variable
+	: ID						{}
+%%
+/*
+Expression
+	: Expression ADD Term		{ $$ = $1 + $3; }
+	| Expression SUBTRACT Term	{ $$ = $1 - $3; }
+	| Term						{ $$ = $1; }	
+Term
+	: Term MULTIPLY Factor		{ $$ = $1 * $3; }
+	| Term DIVIDE Factor		{ $$ = $1 / $3; }
+	| Factor					{ $$ = $1; }
+Factor
+	: Variable					{  }
+	| Constant					{ $$ = $1; }
+	| LPAR Expression RPAR		{ $$ = $2; }
+Variable
+	: ID						{ $$ = yytext; }
+Constant
+	: INTEGER					{ $$ = $1; }
+	| REAL						{ $$ = $1; }
+*/
+#include "lex.yy.c"
+void yyerror(char *s) {
+	fprintf(stderr, "\n%s at %d: nearby \"%s\"\n\n", s, linecounter, yytext);
+	exit(EXIT_FAILURE);
+}
+
+
+void push(double a_number) {
+    if(stack_point + 1 > STACK_MAX) {
+		printf("stack over.");
+		exit(EXIT_FAILURE);
+	}
+	stack[++stack_point] = a_number;
+}
+int pop(void) {
+    return(stack[--stack_point]);
+}
+
