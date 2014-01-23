@@ -1,25 +1,49 @@
+/*
+ * Paladin.
+ * Copyright (C) 2013 TasukuTAKAHASHI All Rights Reserved.
+ * This file is part of Paladin.
+ *
+ * Paladin is programming language, and open source software.
+ * you can redistribute it and/or modify it.
+ * Enjoy Paladin !! */
+
 #include "defs.h"
 
+/*
+ * It start Paladin. 
+ * A user can talk with Paladin, or have Paladin eat a source code by mode of Paladin.
+ * if you'd like to know about it, show "README.md". Good Luck.
+ */
 int main(int argumentCount, char* argumentValues[]) {
 	linecounter = 1;
 	if (argumentCount < 2) {
+		is_talk = true;
 		talk();
 	}
 	else {
+		is_talk = false;
 		eat_code(argumentValues[1]);
 	}
 	return(EXIT_SUCCESS);
 }
 
+/*
+ * A user can talk with Paladin.
+ */
 void talk() {
 	char a_line[READLINE_SIZE];
-	while (fgets(a_line, sizeof a_line, stdin) != NULL) {
+	printf(">> ");
+	while (fgets(a_line, sizeof(a_line), stdin) != NULL) {
 		yy_scan_string(a_line);
 		yyparse();
+		printf(">> ");
 	}
 	return;
 }
 
+/*
+ * A user can have Paladin eat a source code by mode of Paladin
+ */
 void eat_code(char *filename) {
 	yyin = fopen(filename,"r");
 	if(yyin == NULL) {
@@ -30,6 +54,9 @@ void eat_code(char *filename) {
 	return;
 }
 
+/*
+ * Syntactic Analysis
+ */
 Cell *cons(Cell *car, Cell *cdr) {
 	Cell *pointer;
 
@@ -40,6 +67,9 @@ Cell *cons(Cell *car, Cell *cdr) {
 	return(pointer);
 }
 
+/*
+ * Syntactic Analysis
+ */
 Cell *node(char *car, Cell *cdr) {
 	Cell *pointer;
 
@@ -50,6 +80,9 @@ Cell *node(char *car, Cell *cdr) {
 	return(pointer);
 }
 
+/*
+ * Syntactic Analysis
+ */
 Cell *leaf(char *car, char *cdr) {
 	Cell *pointer;
 
@@ -60,35 +93,66 @@ Cell *leaf(char *car, char *cdr) {
 	return(pointer);
 }
 
+/*
+ * Syntactic Analysis
+ */
 void tree(Cell *pointer) {
 	visit(pointer, 1);
-	printf("\n");
 }
 
-void visit(Cell *pointer, int level) {
-	int count;
-
-	printf("\n");
-	for (count = 0; count < level; count++) {
-		printf("    ");
-	}
+/*
+ * Syntactic Analysis
+ */
+Cell *visit(Cell *pointer, int level) {
 	if (pointer->kind == CONS) {
-		printf("cons(");
 		visit(pointer->head, level + 1);
 		visit(pointer->tail, level + 1);
-		printf(")");
+		return(pointer); //need pointer of head & talk
 	}
-	if (pointer->kind == NODE) {
-		printf("node(");
-		printf("%s ", (char *)pointer->head);
-		visit(pointer->tail, level + 1);
-		printf(")");
+	else if (pointer->kind == NODE) {
+		Cell *node = visit(pointer->tail, level + 1);
+		if (strcmp((char *)pointer->head, "=") == 0) {
+			printf("\n");
+		}
+		/*
+		else if ((int)operator == '+') {
+			cons->integer = atoi((char *)cons->head) + atoi((char *)cons->tail);
+			return(cons);
+		}
+		else if ((int)operator == '-') {
+			cons->integer = atoi((char *)cons->head) - atoi((char *)cons->tail);
+			return(cons);
+		}
+		else if ((int)operator == '*') {
+			cons->integer = atoi((char *)cons->head) *  atoi((char *)cons->tail);
+			return(cons);
+		}
+		else if ((int)operator == '/') {
+			cons->integer = atoi((char *)cons->head) / atoi((char *)cons->tail);
+			return(cons);
+		}
+		else {
+			return(NULL);
+		}
+		*/
+		return(pointer);
 	}
-	if (pointer->kind == LEAF) {
-		printf("leaf(");
-		printf("%s ", (char *)pointer->head);
-		printf("%s", (char *)pointer->tail);
-		printf(")");
+	else if (pointer->kind == LEAF) {
+		printf("%s %s\n", (char *)pointer->head, (char *)pointer->tail);
+		if (strcmp((char *)pointer->head,"INTEGER") == 0) {
+			pointer->integer = atoi((char *)pointer->tail); 
+		}
+		else if (strcmp((char *)pointer->head,"REAL") == 0) {
+			pointer->real = atoi((char *)pointer->tail); 
+		}
+		/* 
+		else if (strcmp((char *)pointer->head,"") == 0) {
+			pointer->integer = atoi((char *)pointer->tail); 
+		}
+		*/
+		return(pointer);
 	}
-	return;
+	else {
+		return(NULL);
+	}
 }

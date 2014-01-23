@@ -3,6 +3,7 @@ int linecounter = 1;
 %}
 %option nounput
 %%
+"quit"					{ exit(EXIT_SUCCESS); } 
 "print"					{ return(PRINT); }
 [a-zA-Z_][a-zA-Z0-9_]*	{ return(ID); }
 [0-9]+					{ return(INTEGER); }
@@ -16,12 +17,12 @@ int linecounter = 1;
 "/"						{ return(DIVIDE); }
 "("						{ return(LPAR); }
 ")"						{ return(RPAR); }
-"\n"					{ linecounter++; }
-"\r\n"					{ linecounter++; }
-"\r"					{ linecounter++; }
+"\n"					{ if (!is_talk) { linecounter++; } }
+"\r\n"					{ if (!is_talk) { linecounter++; } }
+"\r"					{ if (!is_talk) { linecounter++; } }
 " "|"\t"				{ }
 "/*"					{ comment(); }
-.					{ return(UNKNOWN); }
+.						{ return(UNKNOWN); }
 %%
 int yywrap(void) {
 	return(1);

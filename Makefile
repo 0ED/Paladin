@@ -1,27 +1,45 @@
+#
+# Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
+# Copyright (C) 2013 AtsushiAOKI All right reserved.
+#
+# Makefile for Paladin.
+# This file is main's Makefile.
+# If you install Paladin, type as below.
+#
+#	make
+#	make install
+#
+
+# === Variables set ===
 TARGET	= pala
 
 # LINK (*.o)
-LD	= cc
+LD		= cc
 LDFLAGS	= -W
 
 # COMPILE (*.c)
-CC	= cc
+CC		= cc
 CCFLAGS	= -W -O2
 
 # GENERATOR (*.lex and *.yac)
-LEX	= flex
-YAC	= yacc
+LEX		= flex
+YAC		= yacc
 
-OBJS	= y.tab.o main.o
+OBJS	= \
+	main.o \
+	y.tab.o 
+SOURCES	= ${OBJS:%.o=%.c}
 DEFS	= defs.h
 REXP	= rexp.lex
 LEXC	= lex.yy.c
 SYNS	= syns.yac
 YACC	= y.tab.c
-SRC	= src.pd
+SRC		= src.pd
 DEMODIR	= Demo
-TMP	= tmp.txt
-OPEN	= vim
+TMP		= tmp.txt
+EDITER	= vim 
+
+#############################################
 
 all: $(TARGET)
 
@@ -43,12 +61,11 @@ clean:
 	-rm -f $(TARGET)* $(OBJS) $(LEXC) $(YACC) $(TMP) *\~
 
 eat: all
-	./$(TARGET) $(DEMODIR)/$(SRC) > $(TMP)
-	cat $(TMP)
+	./$(TARGET) $(DEMODIR)/$(SRC) 
 talk: all
 	./$(TARGET)
 install:
 	sudo cp $(TARGET) /usr/bin/$(TARGET)
 open:
-	$(OPEN) $(DEFS) $(REXP) $(SYNS)
+	$(EDITER) $(DEFS) $(REXP) $(SYNS) $(SOURCES)
 

@@ -3,7 +3,7 @@
 a = 2;
 b = 1;
 c = 5;
-abc = 3 + 4 * 5;
+abc = aaa 3 + 4 * 5;
 def = 3.1415926;
 ghi = (def + def) * abc;
 print abc;
