@@ -1,13 +1,28 @@
 /*
  * Paladin.
  * Copyright (C) 2013 TasukuTAKAHASHI All Rights Reserved.
- * This file is part of Paladin.
+ * This file is a part of Paladin.
  *
  * Paladin is programming language, and open source software.
  * you can redistribute it and/or modify it.
  * Enjoy Paladin !! */
 
 #include "defs.h"
+#include "y.tab.h"
+
+#define TYPE(operator,result,left,right) \
+	if ((operator) == (ADD)) { \
+		result = (left) + (right); \
+	} \
+	else if ((operator) == (SUBTRACT)) { \
+		result = (left) - (right); \
+	} \
+	else if ((operator) == (MULTIPLY)) { \
+		result = (left) * (right); \
+	} \
+	else if ((operator) == (DIVIDE)) { \
+		result = (left) / (right); \
+	}
 
 /*
  * It start Paladin. 
@@ -70,12 +85,12 @@ Cell *cons(Cell *car, Cell *cdr) {
 /*
  * Syntactic Analysis
  */
-Cell *node(char *car, Cell *cdr) {
+Cell *node(int car, Cell *cdr) {
 	Cell *pointer;
 
 	pointer = (Cell *)malloc(sizeof(Cell));
 	pointer->kind = NODE;
-	pointer->head = (Cell *)strdup(car);
+	pointer->head = (Cell *)car;
 	pointer->tail = cdr;
 	return(pointer);
 }
@@ -83,12 +98,12 @@ Cell *node(char *car, Cell *cdr) {
 /*
  * Syntactic Analysis
  */
-Cell *leaf(char *car, char *cdr) {
+Cell *leaf(int car, char *cdr) {
 	Cell *pointer;
 
 	pointer = (Cell *)malloc(sizeof(Cell));
 	pointer->kind = LEAF;
-	pointer->head = (Cell *)strdup(car);
+	pointer->head = (Cell *)car;
 	pointer->tail = (Cell *)strdup(cdr);
 	return(pointer);
 }
@@ -100,59 +115,68 @@ void tree(Cell *pointer) {
 	visit(pointer, 1);
 }
 
+
+
+
+Value *hogehoge(int operator, Value *left, Value *right) {
+	Value *in_value = (Value *)malloc(sizeof(Value));
+
+	if (left->kind == INTEGER && right->kind == INTEGER) {
+		in_value->kind = INTEGER;
+		TYPE(operator, in_value->integer, left->integer,right->integer);
+	}
+	else if (left->kind == INTEGER  && right->kind == REAL) {
+		in_value->kind = REAL;
+		TYPE(operator, in_value->real, left->integer, right->real);
+	}
+	else if (left->kind == REAL && right->kind == INTEGER) {
+		in_value->kind = REAL;
+		TYPE(operator, in_value->real, left->real, right->integer);
+	}
+	else if (left->kind == REAL && right->kind == REAL) {
+		in_value->kind = REAL;
+		TYPE(operator, in_value->real, left->real, right->real);
+	}
+	return in_value;
+}
+
+
 /*
- * Syntactic Analysis
+ * syntactic analysis
  */
-Cell *visit(Cell *pointer, int level) {
+void visit(Cell *pointer, int level) {
 	if (pointer->kind == CONS) {
 		visit(pointer->head, level + 1);
 		visit(pointer->tail, level + 1);
-		return(pointer); //need pointer of head & talk
 	}
 	else if (pointer->kind == NODE) {
-		Cell *node = visit(pointer->tail, level + 1);
-		if (strcmp((char *)pointer->head, "=") == 0) {
-			printf("\n");
+		visit(pointer->tail, level + 1);
+		if (is_empty() == true) {
+			printf("empty\n");
 		}
-		/*
-		else if ((int)operator == '+') {
-			cons->integer = atoi((char *)cons->head) + atoi((char *)cons->tail);
-			return(cons);
+		Value *right = pop();
+		Value *left = pop();
+		printf("%d %d\n",right->integer,left->integer);
+		Value *a_value = hogehoge((int)pointer->head,left,right);
+		push(a_value);
+		if (a_value->kind == INTEGER) {
+			printf("%d\n", a_value->integer);
 		}
-		else if ((int)operator == '-') {
-			cons->integer = atoi((char *)cons->head) - atoi((char *)cons->tail);
-			return(cons);
+		else if (a_value->kind == REAL) {
+			printf("%f\n", a_value->real);
 		}
-		else if ((int)operator == '*') {
-			cons->integer = atoi((char *)cons->head) *  atoi((char *)cons->tail);
-			return(cons);
-		}
-		else if ((int)operator == '/') {
-			cons->integer = atoi((char *)cons->head) / atoi((char *)cons->tail);
-			return(cons);
-		}
-		else {
-			return(NULL);
-		}
-		*/
-		return(pointer);
 	}
 	else if (pointer->kind == LEAF) {
-		printf("%s %s\n", (char *)pointer->head, (char *)pointer->tail);
-		if (strcmp((char *)pointer->head,"INTEGER") == 0) {
-			pointer->integer = atoi((char *)pointer->tail); 
+		Value *in_value = (Value *)malloc(sizeof(Value));
+		if ((int)pointer->head == INTEGER) {
+			in_value->kind = INTEGER;
+			in_value->integer = atoi((char *)pointer->tail);
 		}
-		else if (strcmp((char *)pointer->head,"REAL") == 0) {
-			pointer->real = atoi((char *)pointer->tail); 
+		else if ((int)pointer->head == REAL) {
+			in_value->kind = REAL;
+			in_value->real = atof((char *)pointer->tail);
 		}
-		/* 
-		else if (strcmp((char *)pointer->head,"") == 0) {
-			pointer->integer = atoi((char *)pointer->tail); 
-		}
-		*/
-		return(pointer);
+		push(in_value);
 	}
-	else {
-		return(NULL);
-	}
+	return;
 }

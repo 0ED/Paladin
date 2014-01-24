@@ -14,11 +14,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "stack.h"
 
 #define TRUE	1
 #define FALSE	0
 #define STACK_MAX 100 
-#define READLINE_SIZE 256 
+#define READLINE_SIZE 256
 
 enum {CONS, NODE, LEAF};
 
@@ -51,12 +52,13 @@ int yyparse(void);
 void yyerror(char*);
 YY_BUFFER_STATE_TMP yy_scan_string(const char *yy_str);
 Cell *cons(Cell *, Cell *);
-Cell *node(char *, Cell *);
-Cell *leaf(char *, char *);
+Cell *node(int, Cell *);
+Cell *leaf(int, char *);
 void tree(Cell *);
-Cell *visit(Cell *, int);
+void visit(Cell *, int);
 void talk();
 void eat_code(char *);
+Value *hogehoge(int, Value *, Value *);
 
 #endif /* !__INCLUDE_DEFS_H__*/
 

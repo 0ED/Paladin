@@ -30,7 +30,7 @@ OBJS	= \
 	stack.o \
 	y.tab.o 
 SOURCES	= ${OBJS:%.o=%.c}
-DEFS	= defs.h	
+DEFS	= defs.h
 REXP	= rexp.lex
 LEXC	= lex.yy.c
 SYNS	= syns.yac
@@ -59,7 +59,7 @@ $(YACC): $(SYNS) $(LEXC) $(DEFS)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
-	-rm -f $(TARGET)* $(OBJS) $(LEXC) $(YACC) $(TMP) y.tab.h *\~
+	-rm -f $(TARGET)* $(OBJS) $(LEXC) $(YACC) $(TMP) *\~
 
 eat: 
 	./$(TARGET) $(DEMODIR)/$(SRC) 

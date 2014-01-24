@@ -11,7 +11,7 @@ You'd like to install Paladin, Type as below to Terminal.app.
     make install
 
 And, if you use Paladin, watch "Demo/sample.pd".
-The file is sample program of Paladin. Type as below.
+The file is a sample program of Paladin. Type as below.
 
     pala sample.pd
     
