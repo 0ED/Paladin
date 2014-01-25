@@ -21,4 +21,6 @@ if you'd like to talk with Paladin, Type as below.
     pala
     
 You will be able to talk with Paladin.
+I will think to do version-up sometime soon
 Enjoy Paladin !!
+
