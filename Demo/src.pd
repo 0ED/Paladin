@@ -8,3 +8,4 @@ def = 3.1415926;
 ghi = (def + def) * abc;
 print abc;
 print def, ghi;
+a,b,c = 2,3,2;

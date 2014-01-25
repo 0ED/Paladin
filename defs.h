@@ -18,31 +18,20 @@
 
 #define TRUE	1
 #define FALSE	0
-#define STACK_MAX 100 
 #define READLINE_SIZE 256
 
 enum {CONS, NODE, LEAF};
 
 typedef struct cell {
 	int          kind;
-	int			 integer;
-	double		 real;
-	char		*string;
 	struct cell *head;
 	struct cell *tail;
 } Cell;
-typedef struct variables {
-	char *name;
-	int type;
-	struct variables *next;
-} Variables;
 typedef struct yy_buffer_state *YY_BUFFER_STATE_TMP;
 
 extern char *yytext;
 extern int linecounter;
 extern FILE *yyin;
-double stack[STACK_MAX];
-int stack_point;
 bool is_talk;
 
 int main(int argumentCount, char* argumentValues[]);
@@ -58,7 +47,7 @@ void tree(Cell *);
 void visit(Cell *, int);
 void talk();
 void eat_code(char *);
-Value *hogehoge(int, Value *, Value *);
+Variable *hogehoge(int, Variable *, Variable *);
 
 #endif /* !__INCLUDE_DEFS_H__*/
 

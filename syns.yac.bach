@@ -14,10 +14,9 @@ Statement
 	: Assign SEMICOLON			{ $$ = $1; }
 	| Print SEMICOLON			{ $$ = $1; }
 Assign
-	: Variables EQUAL Expressions	{ $$ = node(EQUAL, cons($1, $3)); }
-Variables
-	: Variable					{ $$ = $1; }
-	| Variables COMMA Variable	{ $$ = node(COMMA, cons($1,$3)); } 
+	: Variable EQUAL Expression	{ $$ = node(EQUAL, cons($1, $3)); }
+Va
+
 Print
 	: PRINT Expressions			{ $$ = node(PRINT, $2); }
 Expressions

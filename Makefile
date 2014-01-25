@@ -28,6 +28,7 @@ YAC		= yacc
 OBJS	= \
 	main.o \
 	stack.o \
+	hashmap.o \
 	y.tab.o 
 SOURCES	= ${OBJS:%.o=%.c}
 DEFS	= defs.h	

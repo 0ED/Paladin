@@ -10,29 +10,28 @@
 #include "stack.h"
 
 /*
- * It's push dynamic value. 
+ * It's push dynamic variable. 
  */
-void push(Value *a_value)
+void push(Variable *a_variable)
 {
 	Stack *a_stack = (Stack *)malloc(sizeof(Stack));
-    a_stack->value = a_value;
+    a_stack->variable = a_variable;
 	a_stack->next = _dynamic_stack;
 	_dynamic_stack = a_stack;
 	return;
 }
 
 /*
- * It's pop dynamic value.
+ * It's pop dynamic variable.
  * and then free Unnecessary pointer.
  */
-Value *pop(void)
+Variable *pop(void)
 {
 	Stack *a_stack = _dynamic_stack;
-	Value *a_value = _dynamic_stack->value;
-	printf("%p\n",_dynamic_stack->next);
+	Variable *a_variable = _dynamic_stack->variable;
 	_dynamic_stack = _dynamic_stack->next;
 	free(a_stack);
-	return(a_value);
+	return(a_variable);
 }
 
 /*
@@ -46,15 +45,15 @@ int is_empty(void)
 /* Example. 
 int main(void) 
 {
-	Value *inValue = (Value *)malloc(sizeof(Value)); 
-	inValue->kind = SAMPLE_LABEL;
-	inValue->integer = 52;
-	push(inValue);
+	Variable *in_variable = (Variable *)malloc(sizeof(Variable));
+	in_variable->kind = SAMPLE_LABEL;
+	in_variable->integer = 52;
+	push(in_variable);
 	
-	Value *outValue = pop();
-	if (outValue->kind == SAMPLE_LABEL) 
+	Variable *out_variable = pop();
+	if (out_variable->kind == SAMPLE_LABEL)
 	{
-		printf("%d\n", outValue->integer);
+		printf("%d\n", out_variable->integer);
 	}
 	return(EXIT_SUCCESS);
 }

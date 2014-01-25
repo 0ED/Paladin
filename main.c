@@ -87,10 +87,13 @@ Cell *cons(Cell *car, Cell *cdr) {
  */
 Cell *node(int car, Cell *cdr) {
 	Cell *pointer;
+	int *integer;
 
 	pointer = (Cell *)malloc(sizeof(Cell));
+	integer = (int *)malloc(sizeof(int));
+	*integer = car;
 	pointer->kind = NODE;
-	pointer->head = (Cell *)car;
+	pointer->head = (Cell *)integer;
 	pointer->tail = cdr;
 	return(pointer);
 }
@@ -100,10 +103,13 @@ Cell *node(int car, Cell *cdr) {
  */
 Cell *leaf(int car, char *cdr) {
 	Cell *pointer;
+	int *integer;
 
 	pointer = (Cell *)malloc(sizeof(Cell));
+	integer = (int *)malloc(sizeof(int));
+	*integer = car;
 	pointer->kind = LEAF;
-	pointer->head = (Cell *)car;
+	pointer->head = (Cell *)integer;
 	pointer->tail = (Cell *)strdup(cdr);
 	return(pointer);
 }
@@ -116,28 +122,26 @@ void tree(Cell *pointer) {
 }
 
 
-
-
-Value *hogehoge(int operator, Value *left, Value *right) {
-	Value *in_value = (Value *)malloc(sizeof(Value));
+Variable *hogehoge(int operator, Variable *left, Variable *right) {
+	Variable *in_variable = (Variable *)malloc(sizeof(Variable));
 
 	if (left->kind == INTEGER && right->kind == INTEGER) {
-		in_value->kind = INTEGER;
-		TYPE(operator, in_value->integer, left->integer,right->integer);
+		in_variable->kind = INTEGER;
+		TYPE(operator, in_variable->integer, left->integer,right->integer);
 	}
 	else if (left->kind == INTEGER  && right->kind == REAL) {
-		in_value->kind = REAL;
-		TYPE(operator, in_value->real, left->integer, right->real);
+		in_variable->kind = REAL;
+		TYPE(operator, in_variable->real, left->integer, right->real);
 	}
 	else if (left->kind == REAL && right->kind == INTEGER) {
-		in_value->kind = REAL;
-		TYPE(operator, in_value->real, left->real, right->integer);
+		in_variable->kind = REAL;
+		TYPE(operator, in_variable->real, left->real, right->integer);
 	}
 	else if (left->kind == REAL && right->kind == REAL) {
-		in_value->kind = REAL;
-		TYPE(operator, in_value->real, left->real, right->real);
+		in_variable->kind = REAL;
+		TYPE(operator, in_variable->real, left->real, right->real);
 	}
-	return in_value;
+	return in_variable;
 }
 
 
@@ -151,32 +155,33 @@ void visit(Cell *pointer, int level) {
 	}
 	else if (pointer->kind == NODE) {
 		visit(pointer->tail, level + 1);
-		if (is_empty() == true) {
-			printf("empty\n");
+		printf("%d\n",*(int *)pointer->head);
+		if (*((int *)pointer->head) == EQUAL) {
+			Variable *a_variable = pop();
+			if (a_variable->kind == INTEGER) {
+				printf("%d\n",a_variable->integer);
+			}
 		}
-		Value *right = pop();
-		Value *left = pop();
-		printf("%d %d\n",right->integer,left->integer);
-		Value *a_value = hogehoge((int)pointer->head,left,right);
-		push(a_value);
-		if (a_value->kind == INTEGER) {
-			printf("%d\n", a_value->integer);
-		}
-		else if (a_value->kind == REAL) {
-			printf("%f\n", a_value->real);
+		else {
+			Variable *right = pop();
+			Variable *left = pop();
+			push(hogehoge(*((int *)pointer->head),left,right));
 		}
 	}
 	else if (pointer->kind == LEAF) {
-		Value *in_value = (Value *)malloc(sizeof(Value));
-		if ((int)pointer->head == INTEGER) {
-			in_value->kind = INTEGER;
-			in_value->integer = atoi((char *)pointer->tail);
+		Variable *in_variable = (Variable *)malloc(sizeof(Variable));
+		if (*((int *)pointer->head) == INTEGER) {
+			in_variable->kind = INTEGER;
+			in_variable->integer = atoi((char *)pointer->tail);
 		}
-		else if ((int)pointer->head == REAL) {
-			in_value->kind = REAL;
-			in_value->real = atof((char *)pointer->tail);
+		else if (*((int *)pointer->head) == REAL) {
+			in_variable->kind = REAL;
+			in_variable->real = atof((char *)pointer->tail);
 		}
-		push(in_value);
+		else if (*((int *)pointer->head) == ID) {
+		}
+
+		push(in_variable);
 	}
 	return;
 }
