@@ -42,38 +42,42 @@
      ID = 258,
      INTEGER = 259,
      REAL = 260,
-     INT = 261,
-     FLOAT = 262,
-     PRINT = 263,
-     SEMICOLON = 264,
-     COMMA = 265,
-     EQUAL = 266,
-     ADD = 267,
-     SUBTRACT = 268,
-     MULTIPLY = 269,
-     DIVIDE = 270,
-     LPAR = 271,
-     RPAR = 272,
-     UNKNOWN = 273
+     WQUOTED = 261,
+     SQUOTED = 262,
+     INT = 263,
+     FLOAT = 264,
+     PRINT = 265,
+     SEMICOLON = 266,
+     COMMA = 267,
+     EQUAL = 268,
+     ADD = 269,
+     SUBTRACT = 270,
+     MULTIPLY = 271,
+     DIVIDE = 272,
+     LPAR = 273,
+     RPAR = 274,
+     UNKNOWN = 275
    };
 #endif
 /* Tokens.  */
 #define ID 258
 #define INTEGER 259
 #define REAL 260
-#define INT 261
-#define FLOAT 262
-#define PRINT 263
-#define SEMICOLON 264
-#define COMMA 265
-#define EQUAL 266
-#define ADD 267
-#define SUBTRACT 268
-#define MULTIPLY 269
-#define DIVIDE 270
-#define LPAR 271
-#define RPAR 272
-#define UNKNOWN 273
+#define WQUOTED 261
+#define SQUOTED 262
+#define INT 263
+#define FLOAT 264
+#define PRINT 265
+#define SEMICOLON 266
+#define COMMA 267
+#define EQUAL 268
+#define ADD 269
+#define SUBTRACT 270
+#define MULTIPLY 271
+#define DIVIDE 272
+#define LPAR 273
+#define RPAR 274
+#define UNKNOWN 275
 
 
 
