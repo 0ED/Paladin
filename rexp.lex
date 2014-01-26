@@ -8,6 +8,8 @@ int linecounter = 1;
 [a-zA-Z_][a-zA-Z0-9_]*	{ return(ID); }
 [0-9]+					{ return(INTEGER); }
 [0-9]*"."[0-9]+			{ return(REAL); }
+\".*\"					{ return(WQUOTED); }
+\'.*\'					{ return(SQUOTED); }
 ";"						{ return(SEMICOLON); }
 ","						{ return(COMMA); }
 "="						{ return(EQUAL); }

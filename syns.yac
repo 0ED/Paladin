@@ -2,7 +2,7 @@
 #include "defs.h"
 #define YYSTYPE Cell *
 %}
-%token  ID INTEGER REAL INT FLOAT PRINT SEMICOLON COMMA EQUAL ADD SUBTRACT MULTIPLY DIVIDE LPAR RPAR UNKNOWN;
+%token  ID INTEGER REAL WQUOTED SQUOTED INT FLOAT PRINT SEMICOLON COMMA EQUAL ADD SUBTRACT MULTIPLY DIVIDE LPAR RPAR UNKNOWN;
 %defines 
 %%
 Program
@@ -14,15 +14,9 @@ Statement
 	: Assign SEMICOLON			{ $$ = $1; }
 	| Print SEMICOLON			{ $$ = $1; }
 Assign
-	: Variables EQUAL Expressions	{ $$ = node(EQUAL, cons($1, $3)); }
-Variables
-	: Variable					{ $$ = $1; }
-	| Variables COMMA Variable	{ $$ = node(COMMA, cons($1,$3)); } 
+	: Variable EQUAL Expression	{ $$ = node(EQUAL, cons($1, $3)); }
 Print
-	: PRINT Expressions			{ $$ = node(PRINT, $2); }
-Expressions
-	: Expression				{ $$ = $1; }
-	| Expressions COMMA Expression	{ $$ = node(COMMA, cons($1, $3)); }
+	: PRINT Expression			{ $$ = node(PRINT, $2); }
 Expression
 	: Expression ADD Term		{ $$ = node(ADD, cons($1, $3)); }
 	| Expression SUBTRACT Term	{ $$ = node(SUBTRACT, cons($1, $3)); }
@@ -41,6 +35,14 @@ Constant
 	: INTEGER					{ $$ = leaf(INTEGER, yytext); }
 	| REAL						{ $$ = leaf(REAL, yytext); }
 %%
+/*
+Variables
+	: Variable					{ $$ = $1; }
+	| Variables COMMA Variable	{ $$ = node(COMMA, cons($1,$3)); } 
+Expressions
+	: Expression				{ $$ = $1; }
+	| Expressions COMMA Expression	{ $$ = node(COMMA, cons($1, $3)); }
+*/
 #include "lex.yy.c"
 void yyerror(char *s) {
 	fprintf(stderr, "%s at %d: nearby \"%s\"\n", s, linecounter, yytext);

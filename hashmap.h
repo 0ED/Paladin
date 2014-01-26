@@ -1,7 +1,7 @@
 /*
  * Paladin.
- * Copyright (C) 2013 TasukuTAKAHASHI All Rights Reserved.
- * This file is part of Paladin.
+ * Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
+ * This file is a part of Paladin.
  *
  * Paladin is programming language, and open source software.
  * you can redistribute it and/or modify it.
@@ -17,19 +17,30 @@
 
 #define HASHSIZE 52
 
-/* if hash number is equal, this List connect next */
-typedef struct list {
+/* 
+ * if hash number is equal, this Variables connect to next
+ */
+typedef struct variables
+{
 	char *variable_name;
 	Variable *variable;
-	struct list *next;
-} List;
+	struct variables *next;
+} Variables;
 
-List *hashtable[HASHSIZE];
+typedef struct hashmap
+{
+	Variables		*hashtable[HASHSIZE];
+	int 			 (*do_hash)();
+	void			 (*put)(); 
+} Hashmap;
 
 int do_hash(char *);
-void put_integer(char *, Variable *);
-void free_variables(void);
+void put(Hashmap *, char *, Variable *);
+
+Hashmap *new_hashmap(void);
+void free_hashmap(Hashmap *);
+void show_hashtable(Hashmap *);
 //int main(void);
 
-#endif /* !__INCLUDE_HASHMAP_H__*/
+#endif /* !__INCLUDE_HASHMAP_H__ */
 

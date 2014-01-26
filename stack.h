@@ -1,7 +1,7 @@
 /*
  * Paladin.
- * Copyright (C) 2013 TasukuTAKAHASHI All Rights Reserved.
- * This file is part of Paladin.
+ * Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
+ * This file is a part of Paladin.
  *
  * Paladin is programming language, and open source software.
  * you can redistribute it and/or modify it.
@@ -14,19 +14,25 @@
 #include <stdlib.h>
 #include "variable.h"
 
-#define SAMPLE_LABEL 1
-
-typedef struct stack {
+typedef struct data 
+{
 	Variable		*variable;
-	struct stack	*next;
+	struct data		*next;
+} Data;
+
+typedef struct stack 
+{
+	Data			*data;
+	void 			 (*push)();
+	Variable		*(*pop)(); 
+	int 			 (*is_empty)();
 } Stack;
 
-Stack *_dynamic_stack;
+Stack *new_stack();
+void free_stack(Stack *);
+void push(Stack *,Variable *);
+Variable *pop(Stack *);
+int is_empty(Stack *);
 
-void push(Variable *a_variable);
-Variable *pop(void);
-int is_empty(void);
-// int main(void);
-
-#endif /* !__INCLUDE_STACK_H__*/
+#endif /* !__INCLUDE_STACK_H__ */
 
