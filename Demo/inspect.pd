@@ -1,0 +1,11 @@
+/* 
+ * Inspect demo program. 
+ */
+
+import inspect
+
+rudds = 5.2 * 10
+nao = 38
+picaso = (52 - 19.86155) * 1.618
+print rudds
+print picaso

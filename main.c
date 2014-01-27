@@ -41,12 +41,12 @@ main(int argumentCount, char* argumentValues[])
 
 	if (argumentCount < 2) 
 	{
-		is_talk = true;
+		is_talk = TRUE;
 		talk();
 	}
 	else
 	{
-		is_talk = false;
+		is_talk = FALSE;
 		eat_code(argumentValues[1]);
 	}
 	free_stack(rpn_stack);
@@ -204,6 +204,21 @@ print_dynamic_value(Variable *a_variable)
 	return; 
 }
 
+void
+inspect(char *a_string, Variable *a_variable)
+{
+	if (a_variable->kind == INTEGER) 
+	{
+		printf("%s: %d\n",a_string, a_variable->integer);		
+	}
+	else if (a_variable->kind == REAL) 
+	{
+		printf("%s: %f\n",a_string, a_variable->real);		
+	}
+	
+	return; 
+}
+
 
 /*
  * syntactic analysis
@@ -223,6 +238,10 @@ visit(Cell *pointer, int level)
 		{
 			char *a_string = (char *)pointer->tail->head->tail;
 			Variable *a_variable = rpn_stack->pop(rpn_stack);
+			if (is_inspect) 
+			{
+				inspect(a_string, a_variable); 
+			}
 			var_hashmap->put(var_hashmap, a_string, a_variable);
 		}
 		else if (*(int *)pointer->head == PRINT)
@@ -254,6 +273,10 @@ visit(Cell *pointer, int level)
 		{
 			in_variable->kind = REAL;
 			in_variable->real = atof((char *)pointer->tail);
+		}
+		else if (*((int *)pointer->head) == INSPECT) 
+		{
+			is_inspect = TRUE;	
 		}
 		rpn_stack->push(rpn_stack, in_variable);
 	}

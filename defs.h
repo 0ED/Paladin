@@ -31,7 +31,8 @@ typedef struct cell
 } Cell;
 typedef struct yy_buffer_state *YY_BUFFER_STATE_TMP;
 
-bool is_talk;
+int is_talk;
+int is_inspect;
 Stack *rpn_stack;
 Hashmap *var_hashmap;
 extern char *yytext;
@@ -40,7 +41,7 @@ extern FILE *yyin;
  
 int main(int argumentCount, char* argumentValues[]);
 int yylex(void);
-void comment(void);
+void comment_block(void);
 int yyparse(void);
 void yyerror(char *);
 YY_BUFFER_STATE_TMP yy_scan_string(const char *yy_str);

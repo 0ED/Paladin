@@ -1,0 +1,7 @@
+/* 
+ * Dynamic variable demo program. 
+ */
+
+# 2.718=e, 3.141592=pi
+curry = 52 * 2.718 + 3.141592 
+print curry 

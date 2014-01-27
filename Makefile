@@ -36,7 +36,7 @@ REXP	= rexp.lex
 LEXC	= lex.yy.c
 SYNS	= syns.yac
 YACC	= y.tab.c
-SRC		= first.pd
+SRC		= second.pd
 DEMODIR	= Demo
 TMP		= tmp.txt
 EDITER	= vim 
@@ -70,4 +70,10 @@ install:
 	sudo cp $(TARGET) /usr/bin/$(TARGET)
 open:
 	$(EDITER) $(DEFS) $(REXP) $(SYNS) $(SOURCES)
+01:
+	./$(TARGET) $(DEMODIR)/dynamic.pd
+02:
+	./$(TARGET) $(DEMODIR)/inspect.pd
+03:
+	./$(TARGET) $(DEMODIR)/error.pd
 

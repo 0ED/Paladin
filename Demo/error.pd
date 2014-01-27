@@ -1,0 +1,9 @@
+/*
+ * Error demo program.
+ */
+
+a = 18782 + 18782
+print a
+print ff
+ff
+

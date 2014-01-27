@@ -3,7 +3,9 @@ int linecounter = 1;
 %}
 %option nounput
 %%
-"quit"					{ exit(EXIT_SUCCESS); } 
+"bye"|"quit"			{ exit(EXIT_SUCCESS); } 
+"import"				{ return(IMPORT); }
+"inspect"				{ return(INSPECT); }
 "print"					{ return(PRINT); }
 [a-zA-Z_][a-zA-Z0-9_]*	{ return(ID); }
 [0-9]+					{ return(INTEGER); }
@@ -23,13 +25,15 @@ int linecounter = 1;
 "\r\n"					{ if (!is_talk) { linecounter++; } return(NEWLINE); }
 "\r"					{ if (!is_talk) { linecounter++; } return(NEWLINE); }
 " "|"\t"				{ }
-"/*"					{ comment(); }
+"/*"					{ comment_block(); }
+"#".*[\r\n"\r\n"]		{ if (!is_talk) { linecounter++; } return(NEWLINE); }
 .						{ return(UNKNOWN); }
 %%
 int yywrap(void) {
 	return(1);
 }
-void comment(void) {
+
+void comment_block(void) {
 	int boolean, first, second;
 
 	boolean = TRUE;
@@ -51,4 +55,7 @@ void comment(void) {
 	if (first == EOF) {
 		fprintf(stderr, "eof in comment\n");
 	}
+
+	return;
 }
+
