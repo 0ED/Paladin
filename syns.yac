@@ -10,6 +10,7 @@ Program
 Statements
 	: Statement					{ $$ = $1; tree($$); }
 	| Statements Statement		{ $$ = $2; tree($$); }
+	| NEWLINE Statements		{ }
 Statement
 	: Assign NEWLINE			{ $$ = $1; }
 	| Print NEWLINE				{ $$ = $1; }

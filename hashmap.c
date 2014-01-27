@@ -105,7 +105,8 @@ void
 put(Hashmap *self, char *variable_name, Variable *a_variable)
 {
 	int hash_number;
-	Variables *root, *node;
+	Variables *root, *node; 
+	Variable *swap;
 	
 	node = (Variables *)malloc(sizeof(Variables));
 	if (node == NULL)
@@ -129,7 +130,10 @@ put(Hashmap *self, char *variable_name, Variable *a_variable)
 		{
 			if (strcmp(root->variable_name, variable_name) == 0) 
 			{
-				
+				swap = root->variable;
+				root->variable = a_variable;
+				free(swap);
+				swap = NULL;
 				return;
 			}
 			root = root->next;
