@@ -145,6 +145,9 @@ put(Hashmap *self, char *variable_name, Variable *a_variable)
 	return;
 }
 
+/*
+ * It's search variable_name, and return infomation of variable pointer.
+ */
 Variable *
 get(Hashmap *self, char *variable_name)
 {

@@ -30,6 +30,7 @@ typedef struct stack
 
 Stack *new_stack();
 void free_stack(Stack *);
+
 void push(Stack *,Variable *);
 Variable *pop(Stack *);
 int is_empty(Stack *);

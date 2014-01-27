@@ -74,7 +74,7 @@ talk(void)
 }
 
 /*
- * A user can have Paladin eat a source code by mode of Paladin
+ * A user can have Paladin eat a source code by mode of Paladin.
  */
 void
 eat_code(char *filename) 
@@ -90,7 +90,7 @@ eat_code(char *filename)
 }
 
 /*
- * Syntactic Analysis
+ * It's a cons for Syntactic Analysis.
  */
 Cell *
 cons(Cell *car, Cell *cdr) 
@@ -106,7 +106,7 @@ cons(Cell *car, Cell *cdr)
 }
 
 /*
- * Syntactic Analysis
+ * It's a node for Syntactic Analysis.
  */
 Cell *
 node(int car, Cell *cdr) 
@@ -125,7 +125,7 @@ node(int car, Cell *cdr)
 }
 
 /*
- * Syntactic Analysis
+ * It's a leaf for Syntactic Analysis.
  */
 Cell *
 leaf(int car, char *cdr) 
@@ -144,7 +144,7 @@ leaf(int car, char *cdr)
 }
 
 /*
- * Syntactic Analysis
+ * It's a tree for Syntactic Analysis.
  */
 void
 tree(Cell *pointer) 
@@ -155,7 +155,8 @@ tree(Cell *pointer)
 }
 
 /*
- * 
+ * It does for arithmetic operator every kind.
+ * Function, "DO_DYNAMIC_FOUR_ARITHMETIC" is macro definition.
  */
 Variable *
 do_four_arithmetic(int operator, Variable *left, Variable *right) 
@@ -187,7 +188,9 @@ do_four_arithmetic(int operator, Variable *left, Variable *right)
 }
 
 /*
- * print
+ * Print a value of variable every kind.
+ * But originally, heap areas of "a_variable->integer" and "a_variable->real" etc.. 
+ * should equalize. I'm sorry.
  */
 void
 print_dynamic_value(Variable *a_variable)
@@ -204,6 +207,9 @@ print_dynamic_value(Variable *a_variable)
 	return; 
 }
 
+/*
+ * It inspects all variable.
+ */
 void
 inspect(char *a_string, Variable *a_variable)
 {
@@ -219,9 +225,8 @@ inspect(char *a_string, Variable *a_variable)
 	return; 
 }
 
-
 /*
- * syntactic analysis
+ * It visits tree from a pointer of argument to leaf.
  */
 void
 visit(Cell *pointer, int level) 

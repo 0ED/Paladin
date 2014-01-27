@@ -78,7 +78,7 @@ pop(Stack *self)
 }
 
 /*
- * Whether the _dynamic_stack is empty.
+ * Whether the data is empty.
  */
 int 
 is_empty(Stack *self)
