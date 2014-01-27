@@ -30,6 +30,7 @@ new_hashmap(void)
 		}
 		self->do_hash = (void *)&do_hash;
 		self->put = (void *)&put;
+		self->get = (void *)&get;
 	}
 	return self;
 }
@@ -128,6 +129,7 @@ put(Hashmap *self, char *variable_name, Variable *a_variable)
 		{
 			if (strcmp(root->variable_name, variable_name) == 0) 
 			{
+				
 				return;
 			}
 			root = root->next;
@@ -137,6 +139,29 @@ put(Hashmap *self, char *variable_name, Variable *a_variable)
 	}
 	
 	return;
+}
+
+Variable *
+get(Hashmap *self, char *variable_name)
+{
+	int hash_number; 
+	Variables *root;
+
+	hash_number = self->do_hash(variable_name);
+	if (self->hashtable[hash_number] != NULL)
+	{
+		root = self->hashtable[hash_number];
+		while (root != NULL) 
+		{
+			if (strcmp(root->variable_name, variable_name) == 0) 
+			{
+				return root->variable;
+			}
+			root = root->next;
+		}
+	}
+	fprintf(stderr,"name error: \"%s\" is undefined variable.\n", variable_name);
+	return NULL;
 }
 
 /*

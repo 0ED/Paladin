@@ -190,7 +190,7 @@ do_four_arithmetic(int operator, Variable *left, Variable *right)
  * print
  */
 void
-print_dynamic_value(Variable *a_variable) 
+print_dynamic_value(Variable *a_variable)
 {
 	if (a_variable->kind == INTEGER) 
 	{
@@ -221,9 +221,18 @@ visit(Cell *pointer, int level)
 		visit(pointer->tail, level + 1);
 		if (*(int *)pointer->head == EQUAL) 
 		{
+			char *a_string = (char *)pointer->tail->head->tail;
 			Variable *a_variable = rpn_stack->pop(rpn_stack);
-			var_hashmap->put(var_hashmap, (char *)pointer->tail->head->tail, a_variable);
-			print_dynamic_value(a_variable);
+			var_hashmap->put(var_hashmap, a_string, a_variable);
+		}
+		else if (*(int *)pointer->head == PRINT)
+		{
+			char *a_string = (char *)pointer->tail->tail;
+			Variable *a_variable = var_hashmap->get(var_hashmap, a_string);	
+			if (a_variable != NULL) 
+			{
+				print_dynamic_value(a_variable);
+			}
 		}
 		else 
 		{

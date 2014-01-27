@@ -42,14 +42,14 @@ int main(int argumentCount, char* argumentValues[]);
 int yylex(void);
 void comment(void);
 int yyparse(void);
-void yyerror(char*);
+void yyerror(char *);
 YY_BUFFER_STATE_TMP yy_scan_string(const char *yy_str);
 Cell *cons(Cell *, Cell *);
 Cell *node(int, Cell *);
 Cell *leaf(int, char *);
 void tree(Cell *);
 void visit(Cell *, int);
-void talk();
+void talk(void);
 void eat_code(char *);
 Variable *do_four_arithmetic(int, Variable *, Variable *);
 

@@ -19,9 +19,9 @@ int linecounter = 1;
 "/"						{ return(DIVIDE); }
 "("						{ return(LPAR); }
 ")"						{ return(RPAR); }
-"\n"					{ if (!is_talk) { linecounter++; } }
-"\r\n"					{ if (!is_talk) { linecounter++; } }
-"\r"					{ if (!is_talk) { linecounter++; } }
+"\n"					{ if (!is_talk) { linecounter++; } return(NEWLINE); }
+"\r\n"					{ if (!is_talk) { linecounter++; } return(NEWLINE); }
+"\r"					{ if (!is_talk) { linecounter++; } return(NEWLINE); }
 " "|"\t"				{ }
 "/*"					{ comment(); }
 .						{ return(UNKNOWN); }

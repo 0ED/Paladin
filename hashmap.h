@@ -22,8 +22,8 @@
  */
 typedef struct variables
 {
-	char *variable_name;
-	Variable *variable;
+	char			*variable_name;
+	Variable		*variable;
 	struct variables *next;
 } Variables;
 
@@ -32,10 +32,12 @@ typedef struct hashmap
 	Variables		*hashtable[HASHSIZE];
 	int 			 (*do_hash)();
 	void			 (*put)(); 
+	Variable		*(*get)(); 
 } Hashmap;
 
 int do_hash(char *);
 void put(Hashmap *, char *, Variable *);
+Variable *get(Hashmap *,char *);
 
 Hashmap *new_hashmap(void);
 void free_hashmap(Hashmap *);
