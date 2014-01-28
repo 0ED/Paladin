@@ -36,13 +36,14 @@ REXP	= rexp.lex
 LEXC	= lex.yy.c
 SYNS	= syns.yac
 YACC	= y.tab.c
-SRC		= second.pd
+SRC		= dynamic.pd
 DEMODIR	= Demo
 TMP		= tmp.txt
 EDITER	= vim 
  
 #############################################
 
+# Compiler
 all: $(TARGET)
 
 $(TARGET): $(YACC) $(OBJS)
@@ -59,17 +60,20 @@ $(YACC): $(SYNS) $(LEXC) $(DEFS)
 %.o: %.c
 	$(CC) $(CCFLAGS) -c $< -o $@
 
+# Tasker
 clean:
 	-rm -f $(TARGET)* $(OBJS) $(LEXC) $(YACC) $(TMP) y.tab.h *\~
 
-eat: 
-	./$(TARGET) $(DEMODIR)/$(SRC) 
-talk: 
-	./$(TARGET)
 install:
 	sudo cp $(TARGET) /usr/bin/$(TARGET)
 open:
 	$(EDITER) $(DEFS) $(REXP) $(SYNS) $(SOURCES)
+
+# Tester
+eat: 
+	./$(TARGET) $(DEMODIR)/$(SRC) 
+talk: 
+	./$(TARGET)
 01:
 	./$(TARGET) $(DEMODIR)/dynamic.pd
 02:
