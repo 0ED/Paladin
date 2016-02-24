@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
-# Copyright (C) 2013 AtsushiAOKI All right reserved.
+# Copyright (C) 2013-2014 Tasuku TAKAHASHI All Rights Reserved.
 #
 # Makefile for Paladin.
 # This file is main's Makefile.

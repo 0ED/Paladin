@@ -1,7 +1,7 @@
 Paladin
 =======
 
-Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
+Copyright (C) 2013-2014 TasukuTAKAHASHI All Rights Reserved.
 
 Paladin is programming language, and open source software.
 You can redistribute it and/or modify it.

@@ -1,6 +1,6 @@
 /*
  * Paladin.
- * Copyright (C) 2014 TasukuTAKAHASHI All Rights Reserved.
+ * Copyright (C) 2013-2014 TasukuTAKAHASHI All Rights Reserved.
  * This file is a part of Paladin.
  *
  * Paladin is programming language, and open source software.
